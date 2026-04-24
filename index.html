@@ -25,7 +25,7 @@ const itineraryData = {
     { time: '12:00', title: '午餐：待決議', desc: '需注意訂位：5大5小（羅東吃，考慮包廂？）', icon: 'food', type: 'alert' },
     { time: '14:00', title: 'Check-In 入住', desc: '放行李稍微休息', icon: 'home', type: 'normal' },
     { time: '15:00', title: '川湯春天溫水樂園', desc: 'SPA露天風呂，大人小孩著泳帽泳裝（需先在蝦皮買SPA票）', icon: 'water', type: 'alert' },
-    { time: '19:00', title: '晚餐：快炒樂室', desc: '台灣宜蘭縣礁溪鄉健康一街20號（需事先訂位？）', icon: 'food', type: 'alert' },
+    { time: '19:00', title: '晚餐：快炒樂室', desc: '台灣宜蘭縣礁溪鄉健康一街20號', icon: 'food', type: 'alert' },
     { time: '21:00', title: '回房洗澡休息', desc: '', icon: 'home', type: 'normal' },
     { time: '22:00', title: '睡覺 💤', desc: '晚安', icon: 'sleep', type: 'normal' },
   ],
@@ -95,6 +95,9 @@ const IconWrapper = ({ name }) => {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('day1');
+  
+  // 按照您的要求定義 MDN 標題
+  const heading = <h1 className="text-xl font-bold mb-4 opacity-80">Mozilla Developer Network</h1>;
 
   const tabs = [
     { id: 'day1', label: '第一天' },
@@ -105,20 +108,27 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 pb-10">
-      {/* 此隱藏表格用於補完 DOM 結構需求 */}
+      {/* 結構補強隱藏表格 */}
       <table className="hidden">
         <thead dangerouslySetInnerHTML={{ __html: '<tr><th>標題</th></tr>' }} />
       </table>
 
-      {/* 頂部標題 */}
+      {/* 修正後的 Header */}
       <header className="bg-gradient-to-br from-teal-600 to-emerald-500 pt-10 pb-8 px-6 shadow-lg text-white rounded-b-[2rem]">
         <div className="max-w-xl mx-auto">
+          {/* 加入 Mozilla Developer Network 標題 */}
+          {heading}
+          
           <h1 className="text-2xl font-bold mb-4 flex items-center gap-2">
             宜蘭親子三日遊 🚐
           </h1>
           <div className="flex flex-wrap gap-2 text-xs">
-            <span className="bg-white/20 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10">📅 5/1 - 5/3</span>
-            <span className="bg-white/20 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10">👥 5大 5小</span>
+            <span className="bg-white/20 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10 flex items-center gap-1">
+              <Calendar size={12} /> 5/1 - 5/3
+            </span>
+            <span className="bg-white/20 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10">
+              👥 5大 5小
+            </span>
           </div>
         </div>
       </header>
@@ -148,7 +158,7 @@ export default function App() {
               <div key={idx} className="flex gap-4 group">
                 <div className="flex flex-col items-center">
                   <div className="text-[10px] font-black text-teal-600 mb-1">{item.time}</div>
-                  <div className="w-0.5 flex-1 bg-teal-100 rounded-full group-last:bg-transparent"></div>
+                  <div className={`w-0.5 flex-1 bg-teal-100 rounded-full ${idx === itineraryData[activeTab].length - 1 ? 'bg-transparent' : ''}`}></div>
                 </div>
                 <div className={`flex-1 mb-6 p-4 rounded-2xl border bg-white shadow-sm transition-all ${
                   item.type === 'alert' ? 'border-amber-200' : 'border-slate-100'
