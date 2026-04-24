@@ -25,15 +25,22 @@ const itineraryData = {
     { time: '12:00', title: '午餐：待決議', desc: '需注意訂位：5大5小（羅東吃，考慮包廂？）', icon: 'food', type: 'alert' },
     { time: '14:00', title: 'Check-In 入住', desc: '', icon: 'home', type: 'normal' },
     { time: '15:00', title: '川湯春天溫水樂園', desc: 'SPA露天風呂，大人小孩著泳帽泳裝（需先在蝦皮買SPA票）', icon: 'water', type: 'alert' },
-    { time: '19:00', title: '晚餐：快炒樂室', desc: '台灣宜蘭縣礁溪鄉健康一街20號　（需事先訂位？）', icon: 'food', type: 'alert' },
+    { time: '19:00', title: '晚餐：快炒樂室', desc: '台灣宜蘭縣礁溪鄉健康一街20號（需事先訂位？）', icon: 'food', type: 'alert' },
     { time: '21:00', title: '回房洗澡休息', desc: '', icon: 'home', type: 'normal' },
     { time: '22:00', title: '睡覺 💤', desc: '', icon: 'sleep', type: 'normal' },
   ],
   day2: [
     { time: '08:00', title: '民宿早餐', desc: '吃麥當勞', icon: 'food', type: 'normal' },
-    { time: '10:00', title: '輕親魚朶生態園區', desc: '乘船餵魚、黑水虻生態、（釣魚/撈蝦二選一）、免費沙坑。\n需事先購票，不分年齡600人\n', linkurl: 'https://www.dawen.com.tw/dawen/index.php?action=act1'　, icon: 'camera', type: 'alert' },
+    { 
+      time: '10:00', 
+      title: '輕親魚朶生態園區', 
+      desc: '乘船餵魚、黑水虻生態、（釣魚/撈蝦二選一）、免費沙坑。\n需事先購票，不分年齡600人', 
+      linkurl: 'https://www.dawen.com.tw/dawen/index.php?action=act1', 
+      icon: 'camera', 
+      type: 'alert' 
+    },
     { time: '12:00', title: '午餐：園區海鮮餐廳代烤', desc: '可先在此用餐，方案每人6隻泰國蝦或1尾烤魚(代烤)', icon: 'food', type: 'normal' },
-    { time: '16:00', title: '買點心去沙灘吃', desc: '補午餐吃不飽\n蔥油餅、花生捲冰淇淋、玉里臭豆腐等', icon: 'coffee', type:'normal' },
+    { time: '16:00', title: '買點心去沙灘吃', desc: '補午餐吃不飽\n蔥油餅、花生捲冰淇淋、玉里臭豆腐等', icon: 'coffee', type: 'normal' },
     { time: '16:30', title: '壯圍沙丘', desc: '玩沙、盪鞦韆、腳踏車道、看龜山島。17:30 看夕陽、玩仙女棒（沙丘內有一間芒草Cafe）', icon: 'water', type: 'activity' },
     { time: '19:00', title: '晚餐：待決議', desc: '', icon: 'food', type: 'alert' },
     { time: '22:00', title: '睡覺 💤', desc: '', icon: 'sleep', type: 'normal' },
@@ -64,14 +71,13 @@ const todoList = [
     'Day 2 晚餐餐廳 (吃什麼？)',
     'Day 3 早餐確認 (維持麥當勞或外送)'
   ]},
- { category: '票卷待訂', items: [
+  { category: '票卷待訂', items: [
     'Day 1 川湯春天SPA露天風呂 (蝦皮)',
     'Day 2 輕親魚朵生態園區活動 (官網$600/人)',
     'Day 3 宜蘭傳藝園區小小職人村 (售票門口$250/人)'
   ]} 
 ];
 
-// 根據 icon 字串回傳對應組件
 const getIcon = (iconName) => {
   switch (iconName) {
     case 'train': return <Train size={18} />;
@@ -86,7 +92,6 @@ const getIcon = (iconName) => {
   }
 };
 
-// 根據 type 給予不同的顏色標籤
 const getTypeStyles = (type) => {
   switch (type) {
     case 'alert': return 'bg-amber-100 text-amber-700 border-amber-200';
@@ -108,7 +113,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-12">
-      {/* Header Area */}
       <div className="bg-gradient-to-r from-teal-500 to-emerald-500 pt-12 pb-6 px-6 shadow-md text-white rounded-b-3xl">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl font-bold mb-3 flex items-center gap-2">
@@ -129,7 +133,6 @@ export default function App() {
       </div>
 
       <div className="max-w-2xl mx-auto px-4 mt-6">
-        {/* Navigation Tabs */}
         <div className="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
           {tabs.map((tab) => (
             <button
@@ -146,21 +149,16 @@ export default function App() {
           ))}
         </div>
 
-        {/* Content Area */}
         <div className="mt-6 bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6">
-          
-          {/* 行程時間軸 */}
           {activeTab !== 'todo' && (
             <div className="space-y-6">
               {itineraryData[activeTab].map((item, index) => (
                 <div key={index} className="flex gap-4">
-                  {/* 左側時間與線條 */}
                   <div className="flex flex-col items-center w-12 flex-shrink-0">
                     <span className="text-sm font-bold text-slate-700 mb-2">{item.time}</span>
                     <div className={`w-1 flex-1 rounded-full ${index === itineraryData[activeTab].length - 1 ? 'bg-transparent' : 'bg-slate-200'}`}></div>
                   </div>
                   
-                  {/* 右側內容卡片 */}
                   <div className={`flex-1 rounded-xl p-4 border mb-4 ${getTypeStyles(item.type)}`}>
                     <div className="flex items-start gap-3">
                       <div className="mt-0.5 bg-white p-1.5 rounded-full shadow-sm">
@@ -174,7 +172,6 @@ export default function App() {
                           </p>
                         )}
                         
-                        {/* 連結按鈕 (如果有的話) */}
                         {item.linkurl && (
                           <a 
                             href={item.linkurl} 
@@ -199,7 +196,6 @@ export default function App() {
             </div>
           )}
 
-          {/* 待辦事項清單 */}
           {activeTab === 'todo' && (
             <div className="space-y-8 animate-in fade-in">
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-amber-800 flex gap-3">
