@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>宜蘭親子三日遊規劃</title>
+    <!-- 引入 Tailwind CSS 進行樣式渲染 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts: Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 隱藏滾動條但保持功能 (針對 Tab 欄位) */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* 優化手機端滑動體驗 */
+        .overflow-x-auto {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 定義漸層動畫背景（可選） */
+        .bg-mesh {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-mesh min-h-screen">
+    <!-- React 掛載點 -->
+    <div id="root"></div>
+
+    <!-- 
+      說明：此檔案作為 App 的殼層。
+      在 Canvas 預覽環境中，系統會自動將 App.jsx 的內容渲染至 #root 節點。
+      若您在本地開發，需搭配 React 與 ReactDOM 的引進。
+    -->
+    <script type="module">
+        console.log("宜蘭旅遊規劃網頁已啟動");
+        
+        // 確保在行動裝置上的點擊反應快速
+        document.addEventListener('touchstart', function(){}, {passive: true});
+    </script>
+</body>
+</html>
