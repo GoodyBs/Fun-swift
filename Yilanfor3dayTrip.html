@@ -16,18 +16,18 @@ import {
   ExternalLink
 } from 'lucide-react';
 
-// 行程資料
+// 行程資料核心
 const itineraryData = {
   day1: [
-    { time: '09:00', title: '桃園火車站集合', desc: '', icon: 'map', type: 'normal' },
+    { time: '09:00', title: '桃園火車站集合', desc: '大家準時集合喔！', icon: 'map', type: 'normal' },
     { time: '09:20', title: '出發羅東', desc: '自強號3000\n 車次：170，09:21 桃園 ➡️ 11:35 羅東', icon: 'train', type: 'info' },
     { time: '11:30', title: '羅東格上租車取車', desc: 'kkday租兩天，納智傑U6 GT五人座（訂編#26KK239560956）', icon: 'car', type: 'info' },
     { time: '12:00', title: '午餐：待決議', desc: '需注意訂位：5大5小（羅東吃，考慮包廂？）', icon: 'food', type: 'alert' },
-    { time: '14:00', title: 'Check-In 入住', desc: '', icon: 'home', type: 'normal' },
+    { time: '14:00', title: 'Check-In 入住', desc: '放行李稍微休息', icon: 'home', type: 'normal' },
     { time: '15:00', title: '川湯春天溫水樂園', desc: 'SPA露天風呂，大人小孩著泳帽泳裝（需先在蝦皮買SPA票）', icon: 'water', type: 'alert' },
     { time: '19:00', title: '晚餐：快炒樂室', desc: '台灣宜蘭縣礁溪鄉健康一街20號（需事先訂位？）', icon: 'food', type: 'alert' },
     { time: '21:00', title: '回房洗澡休息', desc: '', icon: 'home', type: 'normal' },
-    { time: '22:00', title: '睡覺 💤', desc: '', icon: 'sleep', type: 'normal' },
+    { time: '22:00', title: '睡覺 💤', desc: '晚安', icon: 'sleep', type: 'normal' },
   ],
   day2: [
     { time: '08:00', title: '民宿早餐', desc: '吃麥當勞', icon: 'food', type: 'normal' },
@@ -41,15 +41,15 @@ const itineraryData = {
     },
     { time: '12:00', title: '午餐：園區海鮮餐廳代烤', desc: '可先在此用餐，方案每人6隻泰國蝦或1尾烤魚(代烤)', icon: 'food', type: 'normal' },
     { time: '16:00', title: '買點心去沙灘吃', desc: '補午餐吃不飽\n蔥油餅、花生捲冰淇淋、玉里臭豆腐等', icon: 'coffee', type: 'normal' },
-    { time: '16:30', title: '壯圍沙丘', desc: '玩沙、盪鞦韆、腳踏車道、看龜山島。17:30 看夕陽、玩仙女棒（沙丘內有一間芒草Cafe）', icon: 'water', type: 'activity' },
-    { time: '19:00', title: '晚餐：待決議', desc: '', icon: 'food', type: 'alert' },
-    { time: '22:00', title: '睡覺 💤', desc: '', icon: 'sleep', type: 'normal' },
+    { time: '16:30', title: '壯圍沙丘', desc: '玩沙、盪鞦韆、腳踏車道、看龜山島。17:30 看夕陽、玩仙女棒', icon: 'water', type: 'activity' },
+    { time: '19:00', title: '晚餐：待決議', desc: '討論看看想吃什麼', icon: 'food', type: 'alert' },
+    { time: '22:00', title: '睡覺 💤', desc: '累了一整天早點休息', icon: 'sleep', type: 'normal' },
   ],
   day3: [
-    { time: '08:00', title: '民宿早餐', desc: '麥當勞或自己叫外送（吃不夠再叫外送）', icon: 'food', type: 'normal' },
-    { time: '10:00', title: '民宿玩水、玩沙', desc: '', icon: 'water', type: 'activity' },
-    { time: '11:00', title: 'Check-Out 退房', desc: '', icon: 'home', type: 'normal' },
-    { time: '11:30', title: '羅東車站後站還車', desc: '', icon: 'car', type: 'normal' },
+    { time: '08:00', title: '民宿早餐', desc: '麥當勞或自己叫外送', icon: 'food', type: 'normal' },
+    { time: '10:00', title: '民宿玩水、玩沙', desc: '最後享受民宿設施', icon: 'water', type: 'activity' },
+    { time: '11:00', title: 'Check-Out 退房', desc: '整理行李出發', icon: 'home', type: 'normal' },
+    { time: '11:30', title: '羅東車站後站還車', desc: '確認車況與油量', icon: 'car', type: 'normal' },
     { 
       time: '13:00', 
       title: '宜蘭傳藝園區', 
@@ -65,39 +65,31 @@ const itineraryData = {
 };
 
 const todoList = [
-  { category: '餐飲安排', items: [
-    'Day 1 午餐餐廳 (羅東考慮包廂，5大5小)',
-    'Day 1 晚餐餐廳 (快炒樂室是否已訂位？)',
-    'Day 2 晚餐餐廳 (吃什麼？)',
-    'Day 3 早餐確認 (維持麥當勞或外送)'
+  { category: '餐飲預約', items: [
+    'Day 1 午餐餐廳 (5大5小，確認是否有包廂)',
+    'Day 1 晚餐 快炒樂室 訂位確認',
+    'Day 2 晚餐 餐廳清單挑選'
   ]},
-  { category: '票卷待訂', items: [
-    'Day 1 川湯春天SPA露天風呂 (蝦皮)',
-    'Day 2 輕親魚朵生態園區活動 (官網$600/人)',
-    'Day 3 宜蘭傳藝園區小小職人村 (售票門口$250/人)'
+  { category: '票券準備', items: [
+    '購買 Day 1 川湯春天 SPA 票 (蝦皮)',
+    '確認 Day 2 輕親魚朵預約狀況',
+    'Day 3 傳藝中心方案細節確認'
   ]} 
 ];
 
-const getIcon = (iconName) => {
-  switch (iconName) {
-    case 'train': return <Train size={18} />;
-    case 'car': return <Car size={18} />;
-    case 'food': return <Utensils size={18} />;
-    case 'home': return <Home size={18} />;
-    case 'water': return <Waves size={18} />;
-    case 'camera': return <Camera size={18} />;
-    case 'coffee': return <Coffee size={18} />;
-    case 'sleep': return <Moon size={18} />;
-    default: return <MapPin size={18} />;
-  }
-};
-
-const getTypeStyles = (type) => {
-  switch (type) {
-    case 'alert': return 'bg-amber-100 text-amber-700 border-amber-200';
-    case 'info': return 'bg-blue-100 text-blue-700 border-blue-200';
-    case 'activity': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
-    default: return 'bg-slate-100 text-slate-600 border-slate-200';
+// 圖示組件映射
+const IconWrapper = ({ name }) => {
+  const props = { size: 18, className: "text-slate-600" };
+  switch (name) {
+    case 'train': return <Train {...props} />;
+    case 'car': return <Car {...props} />;
+    case 'food': return <Utensils {...props} />;
+    case 'home': return <Home {...props} />;
+    case 'water': return <Waves {...props} />;
+    case 'camera': return <Camera {...props} />;
+    case 'coffee': return <Coffee {...props} />;
+    case 'sleep': return <Moon {...props} />;
+    default: return <MapPin {...props} />;
   }
 };
 
@@ -105,43 +97,38 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('day1');
 
   const tabs = [
-    { id: 'day1', label: 'Day 1 (5/1)' },
-    { id: 'day2', label: 'Day 2 (5/2)' },
-    { id: 'day3', label: 'Day 3 (5/3)' },
+    { id: 'day1', label: '第一天' },
+    { id: 'day2', label: '第二天' },
+    { id: 'day3', label: '第三天' },
     { id: 'todo', label: '待辦事項' },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-12">
-      <div className="bg-gradient-to-r from-teal-500 to-emerald-500 pt-12 pb-6 px-6 shadow-md text-white rounded-b-3xl">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold mb-3 flex items-center gap-2">
-            🚗 宜蘭親子三日遊
+    <div className="min-h-screen bg-slate-50 text-slate-800 pb-10">
+      {/* 頂部標題 */}
+      <header className="bg-gradient-to-br from-teal-600 to-emerald-500 pt-10 pb-8 px-6 shadow-lg text-white rounded-b-[2rem]">
+        <div className="max-w-xl mx-auto">
+          <h1 className="text-2xl font-bold mb-4 flex items-center gap-2">
+            宜蘭親子三日遊 🚐
           </h1>
-          <div className="flex flex-wrap gap-3 text-sm font-medium">
-            <span className="bg-white/20 px-3 py-1.5 rounded-full flex items-center gap-1.5 backdrop-blur-sm">
-              <Calendar size={16} /> 5/1 - 5/3
-            </span>
-            <span className="bg-white/20 px-3 py-1.5 rounded-full flex items-center gap-1.5 backdrop-blur-sm">
-              🧑‍🧑‍🧒‍🧒 5大 5小
-            </span>
-            <span className="bg-white/20 px-3 py-1.5 rounded-full flex items-center gap-1.5 backdrop-blur-sm">
-              <Train size={16} /> 火車 + 租車
-            </span>
+          <div className="flex flex-wrap gap-2 text-xs">
+            <span className="bg-white/20 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10">📅 5/1 - 5/3</span>
+            <span className="bg-white/20 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10">👥 5大 5小</span>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-2xl mx-auto px-4 mt-6">
-        <div className="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
+      <main className="max-w-xl mx-auto px-4 -mt-4">
+        {/* 導覽頁籤 */}
+        <div className="flex p-1 bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-white mb-6 sticky top-4 z-10 overflow-x-auto scrollbar-hide">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm ${
+              className={`flex-1 min-w-[80px] py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${
                 activeTab === tab.id
-                  ? 'bg-teal-600 text-white'
-                  : 'bg-white text-slate-600 hover:bg-slate-100'
+                  ? 'bg-teal-600 text-white shadow-md'
+                  : 'text-slate-500 hover:bg-teal-50'
               }`}
             >
               {tab.label}
@@ -149,82 +136,62 @@ export default function App() {
           ))}
         </div>
 
-        <div className="mt-6 bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6">
-          {activeTab !== 'todo' && (
-            <div className="space-y-6">
-              {itineraryData[activeTab].map((item, index) => (
-                <div key={index} className="flex gap-4">
-                  <div className="flex flex-col items-center w-12 flex-shrink-0">
-                    <span className="text-sm font-bold text-slate-700 mb-2">{item.time}</span>
-                    <div className={`w-1 flex-1 rounded-full ${index === itineraryData[activeTab].length - 1 ? 'bg-transparent' : 'bg-slate-200'}`}></div>
-                  </div>
-                  
-                  <div className={`flex-1 rounded-xl p-4 border mb-4 ${getTypeStyles(item.type)}`}>
-                    <div className="flex items-start gap-3">
-                      <div className="mt-0.5 bg-white p-1.5 rounded-full shadow-sm">
-                        {getIcon(item.icon)}
+        {/* 內容區塊 */}
+        <div className="space-y-4">
+          {activeTab !== 'todo' ? (
+            itineraryData[activeTab].map((item, idx) => (
+              <div key={idx} className="flex gap-4 group">
+                <div className="flex flex-col items-center">
+                  <div className="text-[10px] font-black text-teal-600 mb-1">{item.time}</div>
+                  <div className="w-0.5 flex-1 bg-teal-100 rounded-full group-last:bg-transparent"></div>
+                </div>
+                <div className={`flex-1 mb-6 p-4 rounded-2xl border bg-white shadow-sm transition-all ${
+                  item.type === 'alert' ? 'border-amber-200' : 'border-slate-100'
+                }`}>
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-slate-50 rounded-xl">
+                      <IconWrapper name={item.icon} />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-bold text-slate-800">{item.title}</h3>
+                        {item.type === 'alert' && <AlertCircle size={14} className="text-amber-500" />}
                       </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-base">{item.title}</h3>
-                        {item.desc && (
-                          <p className="text-sm mt-1.5 whitespace-pre-line opacity-90">
-                            {item.desc}
-                          </p>
-                        )}
-                        
-                        {item.linkurl && (
-                          <a 
-                            href={item.linkurl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 mt-3 text-xs font-bold bg-white px-2 py-1.5 rounded-lg shadow-sm border border-emerald-200 hover:bg-emerald-50 transition-colors"
-                          >
-                            <ExternalLink size={12} /> 查看官網資訊
-                          </a>
-                        )}
-
-                        {item.type === 'alert' && (
-                          <div className="flex items-center gap-1 mt-2 text-xs font-bold text-amber-700 bg-amber-200/50 inline-block px-2 py-1 rounded">
-                            <AlertCircle size={12} className="inline" /> 需決議 / 注意
-                          </div>
-                        )}
-                      </div>
+                      {item.desc && <p className="text-xs text-slate-500 mt-1 whitespace-pre-line leading-relaxed">{item.desc}</p>}
+                      {item.linkurl && (
+                        <a href={item.linkurl} target="_blank" rel="noreferrer" className="mt-3 flex items-center gap-1 text-[10px] font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded-md w-fit">
+                          <ExternalLink size={10} /> 查看官網
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-
-          {activeTab === 'todo' && (
-            <div className="space-y-8 animate-in fade-in">
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-amber-800 flex gap-3">
-                <AlertCircle className="flex-shrink-0 mt-0.5" />
-                <p className="text-sm font-medium">以下是目前標記為「待決議」的事項，建議出發前盡快與旅伴確認完畢喔！</p>
               </div>
-
-              {todoList.map((list, idx) => (
-                <div key={idx}>
-                  <h3 className="text-lg font-bold text-slate-800 border-b pb-2 mb-4 flex items-center gap-2">
-                    <CheckCircle2 className="text-teal-500" /> {list.category}
+            ))
+          ) : (
+            <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 animate-in fade-in slide-in-from-bottom-4">
+              <h2 className="text-lg font-bold mb-6 flex items-center gap-2 text-slate-800">
+                <CheckCircle2 className="text-teal-500" /> 出發前準備
+              </h2>
+              {todoList.map((group, i) => (
+                <div key={i} className="mb-8 last:mb-0">
+                  <h3 className="text-sm font-black text-teal-600 uppercase tracking-wider mb-4 px-2 border-l-4 border-teal-500">
+                    {group.category}
                   </h3>
-                  <ul className="space-y-3 pl-2">
-                    {list.items.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-slate-700">
-                        <input 
-                          type="checkbox" 
-                          className="mt-1 w-5 h-5 text-teal-600 rounded border-slate-300 focus:ring-teal-500 cursor-pointer" 
-                        />
-                        <span className="text-sm md:text-base leading-snug">{item}</span>
-                      </li>
+                  <div className="space-y-3">
+                    {group.items.map((item, j) => (
+                      <label key={j} className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer border border-transparent hover:border-slate-100">
+                        <input type="checkbox" className="w-5 h-5 rounded-md border-slate-300 text-teal-600 focus:ring-teal-500" />
+                        <span className="text-sm text-slate-600">{item}</span>
+                      </label>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               ))}
             </div>
           )}
         </div>
-      </div>
+      </main>
     </div>
   );
 }
