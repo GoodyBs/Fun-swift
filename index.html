@@ -1,234 +1,56 @@
-import React, { useState } from 'react';
-import { 
-  Calendar, 
-  Clock, 
-  MapPin, 
-  Train, 
-  Car, 
-  Utensils, 
-  Home, 
-  Coffee, 
-  CheckCircle2, 
-  AlertCircle,
-  Camera,
-  Waves,
-  Moon,
-  ExternalLink
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>宜蘭親子三日遊規劃</title>
+    <!-- 引入 Tailwind CSS 進行樣式渲染 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts: Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-// 行程資料
-const itineraryData = {
-  day1: [
-    { time: '09:00', title: '桃園火車站集合', desc: '', icon: 'map', type: 'normal' },
-    { time: '09:20', title: '出發羅東', desc: '自強號3000\n 車次：170，09:21 桃園 ➡️ 11:35 羅東', icon: 'train', type: 'info' },
-    { time: '11:30', title: '羅東格上租車取車', desc: 'kkday租兩天，納智傑U6 GT五人座（訂編#26KK239560956）', icon: 'car', type: 'info' },
-    { time: '12:00', title: '午餐：待決議', desc: '需注意訂位：5大5小（羅東吃，考慮包廂？）', icon: 'food', type: 'alert' },
-    { time: '14:00', title: 'Check-In 入住', desc: '', icon: 'home', type: 'normal' },
-    { time: '15:00', title: '川湯春天溫水樂園', desc: 'SPA露天風呂，大人小孩著泳帽泳裝（需先在蝦皮買SPA票）', icon: 'water', type: 'alert' },
-    { time: '19:00', title: '晚餐：快炒樂室', desc: '台灣宜蘭縣礁溪鄉健康一街20號　（需事先訂位？）', icon: 'food', type: 'alert' },
-    { time: '21:00', title: '回房洗澡休息', desc: '', icon: 'home', type: 'normal' },
-    { time: '22:00', title: '睡覺 💤', desc: '', icon: 'sleep', type: 'normal' },
-  ],
-  day2: [
-    { time: '08:00', title: '民宿早餐', desc: '吃麥當勞', icon: 'food', type: 'normal' },
-    { time: '10:00', title: '輕親魚朶生態園區', desc: '乘船餵魚、黑水虻生態、（釣魚/撈蝦二選一）、免費沙坑。\n需事先購票，不分年齡600人\n', linkurl: 'https://www.dawen.com.tw/dawen/index.php?action=act1'　, icon: 'camera', type: 'alert' },
-    { time: '12:00', title: '午餐：園區海鮮餐廳代烤', desc: '可先在此用餐，方案每人6隻泰國蝦或1尾烤魚(代烤)', icon: 'food', type: 'normal' },
-    { time: '16:00', title: '買點心去沙灘吃', desc: '補午餐吃不飽\n蔥油餅、花生捲冰淇淋、玉里臭豆腐等', icon: 'coffee', type:'normal' },
-    { time: '16:30', title: '壯圍沙丘', desc: '玩沙、盪鞦韆、腳踏車道、看龜山島。17:30 看夕陽、玩仙女棒（沙丘內有一間芒草Cafe）', icon: 'water', type: 'activity' },
-    { time: '19:00', title: '晚餐：待決議', desc: '', icon: 'food', type: 'alert' },
-    { time: '22:00', title: '睡覺 💤', desc: '', icon: 'sleep', type: 'normal' },
-  ],
-  day3: [
-    { time: '08:00', title: '民宿早餐', desc: '麥當勞或自己叫外送（吃不夠再叫外送）', icon: 'food', type: 'normal' },
-    { time: '10:00', title: '民宿玩水、玩沙', desc: '', icon: 'water', type: 'activity' },
-    { time: '11:00', title: 'Check-Out 退房', desc: '', icon: 'home', type: 'normal' },
-    { time: '11:30', title: '羅東車站後站還車', desc: '', icon: 'car', type: 'normal' },
-    { 
-      time: '13:00', 
-      title: '宜蘭傳藝園區', 
-      desc: '午餐：吃台灣小吃。行程：小小職人村\n售票口購買方案250/人', 
-      linkurl: 'https://www.px-sunmake.org.tw/activity/935', 
-      icon: 'camera', 
-      type: 'activity' 
-    },
-    { time: '16:30', title: '去羅東車站', desc: '交通方式：坐 Uber', icon: 'map', type: 'alert' },
-    { time: '17:20', title: '回程桃園', desc: '自強號3000\n 車次：181，17:35 羅東 ➡️ 20:00 桃園', icon: 'train', type: 'info' },
-    { time: '20:00', title: '到家 🏠', desc: '結束美好旅程！', icon: 'home', type: 'normal' },
-  ]
-};
+        /* 隱藏滾動條但保持功能 (針對 Tab 欄位) */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
-const todoList = [
-  { category: '餐飲安排', items: [
-    'Day 1 午餐餐廳 (羅東考慮包廂，5大5小)',
-    'Day 1 晚餐餐廳 (快炒樂室是否已訂位？)',
-    'Day 2 晚餐餐廳 (吃什麼？)',
-    'Day 3 早餐確認 (維持麥當勞或外送)'
-  ]},
- { category: '票卷待訂', items: [
-    'Day 1 川湯春天SPA露天風呂 (蝦皮)',
-    'Day 2 輕親魚朵生態園區活動 (官網$600/人)',
-    'Day 3 宜蘭傳藝園區小小職人村 (售票門口$250/人)'
-  ]} 
-];
+        /* 優化手機端滑動體驗 */
+        .overflow-x-auto {
+            -webkit-overflow-scrolling: touch;
+        }
 
-// 根據 icon 字串回傳對應組件
-const getIcon = (iconName) => {
-  switch (iconName) {
-    case 'train': return <Train size={18} />;
-    case 'car': return <Car size={18} />;
-    case 'food': return <Utensils size={18} />;
-    case 'home': return <Home size={18} />;
-    case 'water': return <Waves size={18} />;
-    case 'camera': return <Camera size={18} />;
-    case 'coffee': return <Coffee size={18} />;
-    case 'sleep': return <Moon size={18} />;
-    default: return <MapPin size={18} />;
-  }
-};
+        /* 定義漸層動畫背景（可選） */
+        .bg-mesh {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-mesh min-h-screen">
+    <!-- React 掛載點 -->
+    <div id="root"></div>
 
-// 根據 type 給予不同的顏色標籤
-const getTypeStyles = (type) => {
-  switch (type) {
-    case 'alert': return 'bg-amber-100 text-amber-700 border-amber-200';
-    case 'info': return 'bg-blue-100 text-blue-700 border-blue-200';
-    case 'activity': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
-    default: return 'bg-slate-100 text-slate-600 border-slate-200';
-  }
-};
-
-export default function App() {
-  const [activeTab, setActiveTab] = useState('day1');
-
-  const tabs = [
-    { id: 'day1', label: 'Day 1 (5/1)' },
-    { id: 'day2', label: 'Day 2 (5/2)' },
-    { id: 'day3', label: 'Day 3 (5/3)' },
-    { id: 'todo', label: '待辦事項' },
-  ];
-
-  return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-12">
-      {/* Header Area */}
-      <div className="bg-gradient-to-r from-teal-500 to-emerald-500 pt-12 pb-6 px-6 shadow-md text-white rounded-b-3xl">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold mb-3 flex items-center gap-2">
-            🚗 宜蘭親子三日遊
-          </h1>
-          <div className="flex flex-wrap gap-3 text-sm font-medium">
-            <span className="bg-white/20 px-3 py-1.5 rounded-full flex items-center gap-1.5 backdrop-blur-sm">
-              <Calendar size={16} /> 5/1 - 5/3
-            </span>
-            <span className="bg-white/20 px-3 py-1.5 rounded-full flex items-center gap-1.5 backdrop-blur-sm">
-              🧑‍🧑‍🧒‍🧒 5大 5小
-            </span>
-            <span className="bg-white/20 px-3 py-1.5 rounded-full flex items-center gap-1.5 backdrop-blur-sm">
-              <Train size={16} /> 火車 + 租車
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-2xl mx-auto px-4 mt-6">
-        {/* Navigation Tabs */}
-        <div className="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm ${
-                activeTab === tab.id
-                  ? 'bg-teal-600 text-white'
-                  : 'bg-white text-slate-600 hover:bg-slate-100'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Content Area */}
-        <div className="mt-6 bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6">
-          
-          {/* 行程時間軸 */}
-          {activeTab !== 'todo' && (
-            <div className="space-y-6">
-              {itineraryData[activeTab].map((item, index) => (
-                <div key={index} className="flex gap-4">
-                  {/* 左側時間與線條 */}
-                  <div className="flex flex-col items-center w-12 flex-shrink-0">
-                    <span className="text-sm font-bold text-slate-700 mb-2">{item.time}</span>
-                    <div className={`w-1 flex-1 rounded-full ${index === itineraryData[activeTab].length - 1 ? 'bg-transparent' : 'bg-slate-200'}`}></div>
-                  </div>
-                  
-                  {/* 右側內容卡片 */}
-                  <div className={`flex-1 rounded-xl p-4 border mb-4 ${getTypeStyles(item.type)}`}>
-                    <div className="flex items-start gap-3">
-                      <div className="mt-0.5 bg-white p-1.5 rounded-full shadow-sm">
-                        {getIcon(item.icon)}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-base">{item.title}</h3>
-                        {item.desc && (
-                          <p className="text-sm mt-1.5 whitespace-pre-line opacity-90">
-                            {item.desc}
-                          </p>
-                        )}
-                        
-                        {/* 連結按鈕 (如果有的話) */}
-                        {item.linkurl && (
-                          <a 
-                            href={item.linkurl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 mt-3 text-xs font-bold bg-white px-2 py-1.5 rounded-lg shadow-sm border border-emerald-200 hover:bg-emerald-50 transition-colors"
-                          >
-                            <ExternalLink size={12} /> 查看官網資訊
-                          </a>
-                        )}
-
-                        {item.type === 'alert' && (
-                          <div className="flex items-center gap-1 mt-2 text-xs font-bold text-amber-700 bg-amber-200/50 inline-block px-2 py-1 rounded">
-                            <AlertCircle size={12} className="inline" /> 需決議 / 注意
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* 待辦事項清單 */}
-          {activeTab === 'todo' && (
-            <div className="space-y-8 animate-in fade-in">
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-amber-800 flex gap-3">
-                <AlertCircle className="flex-shrink-0 mt-0.5" />
-                <p className="text-sm font-medium">以下是目前標記為「待決議」的事項，建議出發前盡快與旅伴確認完畢喔！</p>
-              </div>
-
-              {todoList.map((list, idx) => (
-                <div key={idx}>
-                  <h3 className="text-lg font-bold text-slate-800 border-b pb-2 mb-4 flex items-center gap-2">
-                    <CheckCircle2 className="text-teal-500" /> {list.category}
-                  </h3>
-                  <ul className="space-y-3 pl-2">
-                    {list.items.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-slate-700">
-                        <input 
-                          type="checkbox" 
-                          className="mt-1 w-5 h-5 text-teal-600 rounded border-slate-300 focus:ring-teal-500 cursor-pointer" 
-                        />
-                        <span className="text-sm md:text-base leading-snug">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
+    <!-- 
+      說明：此檔案作為 App 的殼層。
+      在 Canvas 預覽環境中，系統會自動將 App.jsx 的內容渲染至 #root 節點。
+      若您在本地開發，需搭配 React 與 ReactDOM 的引進。
+    -->
+    <script type="module">
+        console.log("宜蘭旅遊規劃網頁已啟動");
+        
+        // 確保在行動裝置上的點擊反應快速
+        document.addEventListener('touchstart', function(){}, {passive: true});
+    </script>
+</body>
+</html>
